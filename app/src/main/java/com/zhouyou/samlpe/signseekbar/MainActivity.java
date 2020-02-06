@@ -88,8 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void switchContent(String toTag) {
-        if (mTag.equals(toTag))
+        if (mTag.equals(toTag)) {
             return;
+        }
 
         FragmentManager fm = getSupportFragmentManager();
         Fragment from = fm.findFragmentByTag(mTag);

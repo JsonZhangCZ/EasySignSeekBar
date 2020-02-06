@@ -67,29 +67,49 @@ public class SignSeekBar extends View {
         int SIDES = 0, BOTTOM_SIDES = 1, BELOW_SECTION_MARK = 2;
     }
 
-    private float mMin; // min
-    private float mMax; // max
-    private float mProgress; // real time value
-    private boolean isFloatType; // support for float type output
-    private int mTrackSize; // height of right-track(on the right of thumb)
-    private int mSecondTrackSize; // height of left-track(on the left of thumb)
-    private int mThumbRadius; // radius of thumb
-    private int mThumbRadiusOnDragging; // radius of thumb when be dragging
-    private int mTrackColor; // color of right-track
-    private int mSecondTrackColor; // color of left-track
-    private int mThumbColor; // color of thumb
-    private int mSectionCount; // shares of whole progress(max - min)
-    private boolean isShowSectionMark; // show demarcation points or not
-    private boolean isAutoAdjustSectionMark; // auto scroll to the nearest section_mark or not
-    private boolean isShowSectionText; // show section-text or not
-    private int mSectionTextSize; // text size of section-text
-    private int mSectionTextColor; // text color of section-text
+    //progress最小值
+    private float mMin;
+    // progress最大值
+    private float mMax;
+    // 当前值
+    private float mProgress;
+    // 是否是float类型的值
+    private boolean isFloatType;
+    // height of right-track(on the right of thumb)
+    private int mTrackSize;
+    // height of left-track(on the left of thumb)
+    private int mSecondTrackSize;
+    // 滑动点，半径
+    private int mThumbRadius;
+    // 拖动时的 滑动点半径
+    private int mThumbRadiusOnDragging;
+    // 第一轨迹颜色
+    private int mTrackColor;
+    // 第二轨迹颜色
+    private int mSecondTrackColor;
+    // 滑动点的颜色
+    private int mThumbColor;
+    // 节点总数量
+    private int mSectionCount;
+    // 是否显示节点标记
+    private boolean isShowSectionMark;
+    // 是否自动滚动到最近的节点标记
+    private boolean isAutoAdjustSectionMark;
+    // 是否显示节点下面的文本
+    private boolean isShowSectionText;
+    // 节点下面文本的textSize
+    private int mSectionTextSize;
+    // 节点下面文本的颜色
+    private int mSectionTextColor;
     @TextPosition
     private int mSectionTextPosition = NONE; // text position of section-text relative to track
     private int mSectionTextInterval; // the interval of two section-text
-    private boolean isShowThumbText; // show real time progress-text under thumb or not
-    private int mThumbTextSize; // text size of progress-text
-    private int mThumbTextColor; // text color of progress-text
+    // show real time progress-text under thumb or not
+    private boolean isShowThumbText;
+    // text size of progress-text
+    private int mThumbTextSize;
+    // text color of progress-text
+    private int mThumbTextColor;
     private boolean isShowProgressInFloat; // show sign-progress in float or not
     private boolean isTouchToSeek; // touch anywhere on track to quickly seek
     private boolean isSeekBySection; // seek by section, the progress may not be linear
@@ -250,17 +270,20 @@ public class SignSeekBar extends View {
     }
 
     private void init() {
+        //提示框画笔
         signPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         signPaint.setStyle(Paint.Style.FILL);
         signPaint.setAntiAlias(true);
         signPaint.setColor(mSignColor);
 
+        //提示框边框画笔
         signborderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         signborderPaint.setStyle(Paint.Style.STROKE);
         signborderPaint.setStrokeWidth(mSignBorderSize);
         signborderPaint.setColor(mSignBorderColor);
         signborderPaint.setAntiAlias(true);
 
+        //提示框文本画笔
         valueTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         valueTextPaint.setStyle(Paint.Style.FILL);
         valueTextPaint.setTextSize(mSignTextSize);
@@ -356,7 +379,9 @@ public class SignSeekBar extends View {
         if (isShowSign) {
         }
         height += mSignHeight;//加上提示框的高度
-        if (isShowSignBorder) height += mSignBorderSize;//加上提示框边框高度
+        if (isShowSignBorder) {
+            height += mSignBorderSize;//加上提示框边框高度
+        }
         setMeasuredDimension(resolveSize(getSuggestedMinimumWidth(), widthMeasureSpec), height);
 
         mLeft = getPaddingLeft() + mThumbRadiusOnDragging;
@@ -519,7 +544,9 @@ public class SignSeekBar extends View {
         //drawProgressText(canvas);
 
         //draw sign
-        if (!isShowSign) return;
+        if (!isShowSign) {
+            return;
+        }
         drawValueSign(canvas, mSignHeight, (int) mThumbCenterX);
     }
 
@@ -908,8 +935,9 @@ public class SignSeekBar extends View {
      * Detect effective touch of thumb
      */
     private boolean isThumbTouched(MotionEvent event) {
-        if (!isEnabled())
+        if (!isEnabled()) {
             return false;
+        }
         float mCircleR = isThumbOnDragging ? mThumbRadiusOnDragging : mThumbRadius;
         float x = mTrackLength / mDelta * (mProgress - mMin) + mLeft;
         float y = getMeasuredHeight() / 2f;
