@@ -82,7 +82,7 @@ public class SignSeekBar extends View {
     private int mTrackSize;
     // 已选中进度条高度
     private int mSecondTrackSize;
-    //
+    //缓存条的高度size
     private int mCacheTrackSize;
 
 
@@ -108,7 +108,7 @@ public class SignSeekBar extends View {
 
     // 是否自定义显示节点标记位置(***开启此选项时应该关闭，isAutoAdjustSectionMark 配置)
     private boolean isSectionMarkCustom;
-    private ArrayList<Float> customArrayFloat;
+    private ArrayList<Float> mCustomArrayFloat;
     // 是否自动滚动到最近的节点标记
     private boolean isAutoAdjustSectionMark;
     // 是否显示节点下面的文本
@@ -117,15 +117,19 @@ public class SignSeekBar extends View {
     private int mSectionTextSize;
     // 节点下面文本的颜色
     private int mSectionTextColor;
+
+    //节点文本显示的位置
     @TextPosition
     private int mSectionTextPosition = NONE; // text position of section-text relative to track
+    //两个节点文本之间的距离
     private int mSectionTextInterval; // the interval of two section-text
-    // show real time progress-text under thumb or not
+    // 是否显示滑块底部文本
     private boolean isShowThumbText;
-    // text size of progress-text
+    // 滑块底部文本字体大小
     private int mThumbTextSize;
-    // text color of progress-text
+    // 滑块底部文本颜色
     private int mThumbTextColor;
+
     private boolean isShowProgressInFloat; // show sign-progress in float or not
     private boolean isTouchToSeek; // touch anywhere on track to quickly seek
     private boolean isSeekBySection; // seek by section, the progress may not be linear
@@ -138,8 +142,10 @@ public class SignSeekBar extends View {
     private int mSignColor;// color of sign
     private int mSignTextSize; // text size of sign-progress
     private int mSignTextColor; // text color of sign-progress
-    private int mSignHeight; //sign Height
-    private int mSignWidth; //sign width
+    // 提示框高度
+    private int mSignHeight;
+    // 提示框宽度
+    private int mSignWidth;
 
     private float mDelta; // max - min
     private float mSectionValue; // (mDelta / mSectionCount)
@@ -154,8 +160,10 @@ public class SignSeekBar extends View {
     private boolean triggerSeekBySection;
 
     private OnProgressChangedListener mProgressListener; // progress changing listener
-    private float mLeft; // space between left of track and left of the view
-    private float mRight; // space between right of track and left of the view
+    //轨道的左边距离本view的间距
+    private float mLeft;
+    //轨道的右边距离本view的间距
+    private float mRight;
     private Paint mPaint;
     private Rect mRectText;
 
@@ -167,6 +175,7 @@ public class SignSeekBar extends View {
     private float mThumbBgAlpha; //  alpha of thumb shadow
     private float mThumbRatio; // ratio of thumb shadow
     private boolean isShowThumbShadow;
+    //是否显示提示框
     private boolean isShowSign;
     private boolean isSignArrowAutofloat;
 
@@ -418,9 +427,10 @@ public class SignSeekBar extends View {
         mLeft = getPaddingLeft() + mThumbRadiusOnDragging;
         mRight = getMeasuredWidth() - getPaddingRight() - mThumbRadiusOnDragging;
 
+        //节点下面的文本的一些处理
         if (isShowSectionText) {
             mPaint.setTextSize(mSectionTextSize);
-
+            //左右两边显示区间字段  比如左边显示0   右边显示100
             if (mSectionTextPosition == TextPosition.SIDES) {
                 String text = getMinText();
                 mPaint.getTextBounds(text, 0, text.length(), mRectText);
@@ -441,8 +451,8 @@ public class SignSeekBar extends View {
                 mRight = getMeasuredWidth() - getPaddingRight() - max - mTextSpace;
             }
         } else if (isShowThumbText && mSectionTextPosition == NONE) {
+            //滑块下面的文本的一些处理
             mPaint.setTextSize(mThumbTextSize);
-
             String text = getMinText();
             mPaint.getTextBounds(text, 0, text.length(), mRectText);
             float max = Math.max(mThumbRadiusOnDragging, mRectText.width() / 2f);
@@ -454,14 +464,16 @@ public class SignSeekBar extends View {
             mRight = getMeasuredWidth() - getPaddingRight() - max - mTextSpace;
         }
 
+        //提示框处理
         if (isShowSign && !isSignArrowAutofloat) {//提示框 三角指示是否自动移动
             mLeft = Math.max(mLeft, getPaddingLeft() + mSignWidth / 2 + mSignBorderSize);
             mRight = Math.min(mRight, getMeasuredWidth() - getPaddingRight() - mSignWidth / 2 - mSignBorderSize);
         }
 
+        //轨迹长度
         mTrackLength = mRight - mLeft;
+        //平均分段的 偏移量
         mSectionOffset = mTrackLength * 1f / mSectionCount;
-        mPerProgressWidth = mTrackLength * 1f / mMax;
     }
 
     @Override
@@ -471,17 +483,20 @@ public class SignSeekBar extends View {
         float xLeft = getPaddingLeft();
         float xRight = getMeasuredWidth() - getPaddingRight();
         float yTop = getPaddingTop() + mThumbRadiusOnDragging;
-        if (isShowSign) {//加上提示框高度
+        //加上提示框高度
+        if (isShowSign) {
             yTop += mSignHeight;
         }
-        if (isShowSignBorder) {//加上提示框边框高度
+        //加上提示框边框高度
+        if (isShowSignBorder) {
             yTop += mSignBorderSize;
         }
-        if (isShowSign && !isSignArrowAutofloat) {//是否浮动显示提示框三角指示，默认浮动，否则居中显示
+        //是否浮动显示提示框三角指示，默认浮动，否则居中显示
+        if (isShowSign && !isSignArrowAutofloat) {
             xLeft += (mSignWidth / 2 + mSignBorderSize);
             xRight -= (mSignWidth / 2 + mSignBorderSize);
         }
-        // draw sectionText SIDES or BOTTOM_SIDES
+        //画节点text （画在进度条左右两边或者画在下面）
         if (isShowSectionText) {
             mPaint.setTextSize(mSectionTextSize);
             mPaint.setColor(isEnabled() ? mSectionTextColor : mUnusableColor);
@@ -539,7 +554,8 @@ public class SignSeekBar extends View {
         if (isShowThumbText && !isThumbOnDragging && isTouchToSeekAnimEnd) {
             drawThumbText(canvas, yTop);
         }
-
+        //轨迹长度/总size    得到的结果
+        mPerProgressWidth = (xRight-xLeft) * 1f / mMax;
         // draw track
         mPaint.setColor(mSecondTrackColor);
         mPaint.setStrokeWidth(mSecondTrackSize);
@@ -554,7 +570,7 @@ public class SignSeekBar extends View {
         if(mCacheProgress*mPerProgressWidth>mThumbCenterX){
             mPaint.setColor(mCacheTrackColor);
             mPaint.setStrokeWidth(mCacheTrackSize);
-            canvas.drawLine(mThumbCenterX, yTop, mCacheProgress*mPerProgressWidth, yTop, mPaint);
+            canvas.drawLine(mThumbCenterX, yTop, xLeft+mCacheProgress*mPerProgressWidth, yTop, mPaint);
         }
 
         boolean isShowTextBelowSectionMark = isShowSectionText && mSectionTextPosition ==
@@ -664,8 +680,8 @@ public class SignSeekBar extends View {
 
         float x_;
         float y_ = yTop + mRectText.height() + mThumbRadiusOnDragging + mTextSpace;
-        for (int i = 0; i < customArrayFloat.size(); i++) {
-            x_ = xLeft + customArrayFloat.get(i) * mPerProgressWidth;
+        for (int i = 0; i < mCustomArrayFloat.size(); i++) {
+            x_ = xLeft + mCustomArrayFloat.get(i) * mPerProgressWidth;
             mPaint.setColor(x_ <= junction ? mSecondTrackColor : mSectionMarkColor);
             // sectionMark
             canvas.drawCircle(x_, yTop, r, mPaint);
@@ -1130,6 +1146,20 @@ public class SignSeekBar extends View {
         postInvalidate();
     }
 
+    public void setMax(float max) {
+        this.mMax = max;
+    }
+
+    public void setCustomArrayFloat(ArrayList<Float> customArrayFloat){
+        mCustomArrayFloat = customArrayFloat;
+        postInvalidate();
+    }
+
+    public void setCacheProgress(float cacheProgress) {
+        mCacheProgress = cacheProgress;
+        postInvalidate();
+    }
+
     public int getProgress() {
         if (isSeekBySection && triggerSeekBySection) {
             float half = mSectionValue / 2;
@@ -1185,7 +1215,7 @@ public class SignSeekBar extends View {
         isShowSectionMark = builder.showSectionMark;
         mSectionMarkColor = builder.sectionMarkColor;
         isSectionMarkCustom = builder.sectionCustom;
-        customArrayFloat = builder.customArrayFloat;
+        mCustomArrayFloat = builder.customArrayFloat;
         isAutoAdjustSectionMark = builder.autoAdjustSectionMark;
         isShowSectionText = builder.showSectionText;
         mSectionTextSize = builder.sectionTextSize;
@@ -1241,6 +1271,7 @@ public class SignSeekBar extends View {
         mConfigBuilder.min = mMin;
         mConfigBuilder.max = mMax;
         mConfigBuilder.progress = mProgress;
+        mConfigBuilder.cacheProgress = mCacheProgress;
         mConfigBuilder.floatType = isFloatType;
         mConfigBuilder.trackSize = mTrackSize;
         mConfigBuilder.secondTrackSize = mSecondTrackSize;
@@ -1255,7 +1286,7 @@ public class SignSeekBar extends View {
         mConfigBuilder.showSectionMark = isShowSectionMark;
         mConfigBuilder.sectionMarkColor = mSectionMarkColor;
         mConfigBuilder.sectionCustom = isSectionMarkCustom;
-        mConfigBuilder.customArrayFloat = customArrayFloat;
+        mConfigBuilder.customArrayFloat = mCustomArrayFloat;
         mConfigBuilder.autoAdjustSectionMark = isAutoAdjustSectionMark;
         mConfigBuilder.showSectionText = isShowSectionText;
         mConfigBuilder.sectionTextSize = mSectionTextSize;

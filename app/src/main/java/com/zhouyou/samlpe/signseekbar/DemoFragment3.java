@@ -93,11 +93,11 @@ public class DemoFragment3 extends Fragment {
         arr.add(36f);
         arr.add(56f);
         arr.add(70f);
+        signSeekBar5.setMax(120);
+        signSeekBar5.setCacheProgress(70);
         signSeekBar5.getConfigBuilder()
                 .min(0)
-                .max(80)
                 .progress(0)
-                .cacheProgress(50)
                 .trackSize(2)
                 .secondTrackSize(2)
                 .cacheTrackSize(2)
@@ -109,10 +109,7 @@ public class DemoFragment3 extends Fragment {
                 .sectionCustom()
                 .touchToSeek()
                 .customSectionArrayFloat(arr)
-                .sectionTextInterval(2)
-                .showSectionText()
                 .showSectionMark()
-                .sectionTextPosition(SignSeekBar.TextPosition.BELOW_SECTION_MARK)
                 .build();
 
         return view;
