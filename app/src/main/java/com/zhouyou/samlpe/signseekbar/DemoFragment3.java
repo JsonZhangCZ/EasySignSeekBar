@@ -1,5 +1,7 @@
 package com.zhouyou.samlpe.signseekbar;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.zhouyou.view.seekbar.SignSeekBar;
+
+import java.util.ArrayList;
 
 public class DemoFragment3 extends Fragment {
 
@@ -25,6 +29,7 @@ public class DemoFragment3 extends Fragment {
         SignSeekBar signSeekBar2 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_2);
         SignSeekBar signSeekBar3 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_3);
         SignSeekBar signSeekBar4 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_4);
+        SignSeekBar signSeekBar5 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_5);
 
         signSeekBar1.getConfigBuilder()
                 .min(0)
@@ -80,6 +85,34 @@ public class DemoFragment3 extends Fragment {
                 .showSectionText()
                 .sectionTextPosition(SignSeekBar.TextPosition.BELOW_SECTION_MARK)
                 .autoAdjustSectionMark()
+                .build();
+        ArrayList<Float> arr = new ArrayList<Float>();
+        arr.add(10f);
+        arr.add(18f);
+        arr.add(30f);
+        arr.add(36f);
+        arr.add(56f);
+        arr.add(70f);
+        signSeekBar5.getConfigBuilder()
+                .min(0)
+                .max(80)
+                .progress(0)
+                .cacheProgress(50)
+                .trackSize(2)
+                .secondTrackSize(2)
+                .cacheTrackSize(2)
+                .trackColor(Color.parseColor("#66FFFFFF"))
+                .secondTrackColor(Color.parseColor("#FF26D3BC"))
+                .cacheTrackColor(Color.parseColor("#CCFFFFFF"))
+                .sectionMarkColor(Color.parseColor("#FFFFFF"))
+                .floatType()
+                .sectionCustom()
+                .touchToSeek()
+                .customSectionArrayFloat(arr)
+                .sectionTextInterval(2)
+                .showSectionText()
+                .showSectionMark()
+                .sectionTextPosition(SignSeekBar.TextPosition.BELOW_SECTION_MARK)
                 .build();
 
         return view;

@@ -20,6 +20,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.IntRange;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 
 /**
  * <p>描述：config SignSeekBar's attributes</p>
@@ -31,16 +32,22 @@ public class SignConfigBuilder {
     float min;
     float max;
     float progress;
+    float cacheProgress;
     boolean floatType;
     int trackSize;
     int secondTrackSize;
+    int cacheTrackSize;
     int thumbRadius;
     int thumbRadiusOnDragging;
     int trackColor;
     int secondTrackColor;
+    int cacheTrackColor;
+    int sectionMarkColor;
     int thumbColor;
     int sectionCount;
     boolean showSectionMark;
+    boolean sectionCustom;
+    ArrayList<Float> customArrayFloat;
     boolean autoAdjustSectionMark;
     boolean showSectionText;
     int sectionTextSize;
@@ -76,7 +83,6 @@ public class SignConfigBuilder {
     int signBorderColor;// color of border color
     NumberFormat format;
     boolean reverse;
-
     SignConfigBuilder(SignSeekBar signSeekBar) {
         mSignSeekBar = signSeekBar;
     }
@@ -101,6 +107,11 @@ public class SignConfigBuilder {
         return this;
     }
 
+    public SignConfigBuilder cacheProgress(float cacheProgress) {
+        this.cacheProgress = cacheProgress;
+        return this;
+    }
+
     public SignConfigBuilder floatType() {
         this.floatType = true;
         return this;
@@ -113,6 +124,10 @@ public class SignConfigBuilder {
 
     public SignConfigBuilder secondTrackSize(int dp) {
         this.secondTrackSize = SignUtils.dp2px(dp);
+        return this;
+    }
+    public SignConfigBuilder cacheTrackSize(int dp) {
+        this.cacheTrackSize = SignUtils.dp2px(dp);
         return this;
     }
 
@@ -139,6 +154,14 @@ public class SignConfigBuilder {
         this.signColor = color;
         return this;
     }
+    public SignConfigBuilder cacheTrackColor(@ColorInt int color) {
+        this.cacheTrackColor = color;
+        return this;
+    }
+    public SignConfigBuilder sectionMarkColor(@ColorInt int color) {
+        this.sectionMarkColor = color;
+        return this;
+    }
 
     public SignConfigBuilder thumbColor(@ColorInt int color) {
         this.thumbColor = color;
@@ -152,6 +175,15 @@ public class SignConfigBuilder {
 
     public SignConfigBuilder showSectionMark() {
         this.showSectionMark = true;
+        return this;
+    }
+    public SignConfigBuilder customSectionArrayFloat(ArrayList<Float> customArrayFloat) {
+        this.customArrayFloat = customArrayFloat;
+        return this;
+    }
+
+    public SignConfigBuilder sectionCustom() {
+        this.sectionCustom = true;
         return this;
     }
 
@@ -329,6 +361,9 @@ public class SignConfigBuilder {
     public int getSecondTrackSize() {
         return secondTrackSize;
     }
+    public int getCacheTrackSize() {
+        return cacheTrackSize;
+    }
 
     public int getThumbRadius() {
         return thumbRadius;
@@ -356,6 +391,13 @@ public class SignConfigBuilder {
 
     public boolean isShowSectionMark() {
         return showSectionMark;
+    }
+
+    public boolean isSectionCustom() {
+        return sectionCustom;
+    }
+    public ArrayList<Float> customArrayFloat() {
+        return customArrayFloat;
     }
 
     public boolean isAutoAdjustSectionMark() {

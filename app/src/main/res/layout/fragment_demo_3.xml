@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#000000"
     android:padding="@dimen/activity_horizontal_margin">
 
     <TextView
@@ -54,6 +55,12 @@
 
     <com.zhouyou.view.seekbar.SignSeekBar
         android:id="@+id/demo_3_seek_bar_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"/>
+
+    <com.zhouyou.view.seekbar.SignSeekBar
+        android:id="@+id/demo_3_seek_bar_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"/>
