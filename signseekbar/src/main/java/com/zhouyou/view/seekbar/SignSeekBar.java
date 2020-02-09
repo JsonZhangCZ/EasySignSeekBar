@@ -474,6 +474,9 @@ public class SignSeekBar extends View {
         mTrackLength = mRight - mLeft;
         //平均分段的 偏移量
         mSectionOffset = mTrackLength * 1f / mSectionCount;
+
+        //轨迹长度/总size    得到的结果
+        mPerProgressWidth = mTrackLength * 1f / mMax;
     }
 
     @Override
@@ -554,8 +557,7 @@ public class SignSeekBar extends View {
         if (isShowThumbText && !isThumbOnDragging && isTouchToSeekAnimEnd) {
             drawThumbText(canvas, yTop);
         }
-        //轨迹长度/总size    得到的结果
-        mPerProgressWidth = (xRight-xLeft) * 1f / mMax;
+
         // draw track
         mPaint.setColor(mSecondTrackColor);
         mPaint.setStrokeWidth(mSecondTrackSize);
@@ -1148,6 +1150,8 @@ public class SignSeekBar extends View {
 
     public void setMax(float max) {
         this.mMax = max;
+        mDelta = mMax - mMin;
+        postInvalidate();
     }
 
     public void setCustomArrayFloat(ArrayList<Float> customArrayFloat){
