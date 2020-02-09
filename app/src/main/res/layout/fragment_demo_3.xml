@@ -61,6 +61,19 @@
 
     <com.zhouyou.view.seekbar.SignSeekBar
         android:id="@+id/demo_3_seek_bar_5"
+        app:ssb_min="0"
+        app:ssb_track_size="2dp"
+        app:ssb_second_track_size="2dp"
+        app:ssb_cache_track_size="2dp"
+        app:ssb_track_color="#66FFFFFF"
+        app:ssb_second_track_color="#26d3bc"
+        app:ssb_cache_track_color="#CCFFFFFF"
+        app:ssb_mark_radius="2.5dp"
+        app:ssb_touch_to_seek="true"
+        app:ssb_is_float_type="false"
+        app:ssb_section_custom="true"
+        app:ssb_section_mark_color="#FF0000"
+        app:ssb_show_section_mark="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"/>

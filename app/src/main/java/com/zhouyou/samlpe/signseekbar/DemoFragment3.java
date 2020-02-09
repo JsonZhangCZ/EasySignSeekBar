@@ -87,29 +87,16 @@ public class DemoFragment3 extends Fragment {
                 .autoAdjustSectionMark()
                 .build();
         ArrayList<Float> arr = new ArrayList<Float>();
-        arr.add(10f);
-        arr.add(18f);
-        arr.add(30f);
-        arr.add(36f);
-        arr.add(56f);
-        arr.add(70f);
-        signSeekBar5.setMax(120);
-        signSeekBar5.setCacheProgress(70);
+        arr.add(1000f);
+        arr.add(18000f);
+        arr.add(16000f);
+        arr.add(11000f);
+        arr.add(13000f);
+        arr.add(19000f);
+        signSeekBar5.setMax(28254);
+        signSeekBar5.setCacheProgress(28000);
         signSeekBar5.getConfigBuilder()
-                .min(0)
-                .progress(0)
-                .trackSize(2)
-                .secondTrackSize(2)
-                .cacheTrackSize(2)
-                .trackColor(Color.parseColor("#66FFFFFF"))
-                .secondTrackColor(Color.parseColor("#FF26D3BC"))
-                .cacheTrackColor(Color.parseColor("#CCFFFFFF"))
-                .sectionMarkColor(Color.parseColor("#FFFFFF"))
-                .floatType()
-                .sectionCustom()
-                .touchToSeek()
                 .customSectionArrayFloat(arr)
-                .showSectionMark()
                 .build();
 
         return view;

@@ -88,6 +88,8 @@ public class SignSeekBar extends View {
 
     // 滑动点，半径
     private int mThumbRadius;
+    // 标记点，半径
+    private int mMarkRadius;
     // 拖动时的 滑动点半径
     private int mThumbRadiusOnDragging;
     // 第一轨迹颜色
@@ -219,6 +221,7 @@ public class SignSeekBar extends View {
         mSecondTrackSize = a.getDimensionPixelSize(R.styleable.SignSeekBar_ssb_second_track_size, mTrackSize + SignUtils.dp2px(2));
         mCacheTrackSize = a.getDimensionPixelSize(R.styleable.SignSeekBar_ssb_cache_track_size, mTrackSize + SignUtils.dp2px(2));
         mThumbRadius = a.getDimensionPixelSize(R.styleable.SignSeekBar_ssb_thumb_radius, mSecondTrackSize + SignUtils.dp2px(2));
+        mMarkRadius = a.getDimensionPixelSize(R.styleable.SignSeekBar_ssb_mark_radius, 0);
         mThumbRadiusOnDragging = a.getDimensionPixelSize(R.styleable.SignSeekBar_ssb_thumb_radius, mSecondTrackSize * 2);
         mSignBorderSize = a.getDimensionPixelSize(R.styleable.SignSeekBar_ssb_sign_border_size, SignUtils.dp2px(1));
         mSectionCount = a.getInteger(R.styleable.SignSeekBar_ssb_section_count, 10);
@@ -352,6 +355,9 @@ public class SignSeekBar extends View {
         if (mThumbRadius <= mSecondTrackSize) {
             mThumbRadius = mSecondTrackSize + SignUtils.dp2px(2);
         }
+        if(mMarkRadius == 0){
+            mMarkRadius = mSecondTrackSize + SignUtils.dp2px(2);
+        }
         if (mThumbRadiusOnDragging <= mSecondTrackSize) {
             mThumbRadiusOnDragging = mSecondTrackSize * 2;
         }
@@ -475,8 +481,6 @@ public class SignSeekBar extends View {
         //平均分段的 偏移量
         mSectionOffset = mTrackLength * 1f / mSectionCount;
 
-        //轨迹长度/总size    得到的结果
-        mPerProgressWidth = mTrackLength * 1f / mMax;
     }
 
     @Override
@@ -486,6 +490,9 @@ public class SignSeekBar extends View {
         float xLeft = getPaddingLeft();
         float xRight = getMeasuredWidth() - getPaddingRight();
         float yTop = getPaddingTop() + mThumbRadiusOnDragging;
+
+        //轨迹长度/总size    得到的结果
+        mPerProgressWidth = mTrackLength * 1f / mMax;
         //加上提示框高度
         if (isShowSign) {
             yTop += mSignHeight;
@@ -672,8 +679,6 @@ public class SignSeekBar extends View {
      * @param conditionInterval 条件区间，外界传过来的总是true
      */
     private void drawCustomMark(Canvas canvas, float xLeft, float yTop, boolean isShowTextBelowSectionMark, boolean conditionInterval) {
-        //节点半径  （滑块拖动时半径-2dp）/2
-        float r = (mThumbRadiusOnDragging - SignUtils.dp2px(2)) / 2f;
         // 交汇点x轴坐标
         float junction = mTrackLength / mDelta * Math.abs(mProgress - mMin) + mLeft;
         //设置文本画笔的文字大小及边框
@@ -686,7 +691,7 @@ public class SignSeekBar extends View {
             x_ = xLeft + mCustomArrayFloat.get(i) * mPerProgressWidth;
             mPaint.setColor(x_ <= junction ? mSecondTrackColor : mSectionMarkColor);
             // sectionMark
-            canvas.drawCircle(x_, yTop, r, mPaint);
+            canvas.drawCircle(x_, yTop, mMarkRadius, mPaint);
         }
     }
 
@@ -1150,6 +1155,7 @@ public class SignSeekBar extends View {
 
     public void setMax(float max) {
         this.mMax = max;
+        //设置max后初始化 delta
         mDelta = mMax - mMin;
         postInvalidate();
     }
@@ -1210,6 +1216,7 @@ public class SignSeekBar extends View {
         mSecondTrackSize = builder.secondTrackSize;
         mCacheTrackSize = builder.cacheTrackSize;
         mThumbRadius = builder.thumbRadius;
+        mMarkRadius = builder.markRadius;
         mThumbRadiusOnDragging = builder.thumbRadiusOnDragging;
         mTrackColor = builder.trackColor;
         mSecondTrackColor = builder.secondTrackColor;
@@ -1281,6 +1288,7 @@ public class SignSeekBar extends View {
         mConfigBuilder.secondTrackSize = mSecondTrackSize;
         mConfigBuilder.cacheTrackSize = mCacheTrackSize;
         mConfigBuilder.thumbRadius = mThumbRadius;
+        mConfigBuilder.markRadius = mMarkRadius;
         mConfigBuilder.thumbRadiusOnDragging = mThumbRadiusOnDragging;
         mConfigBuilder.trackColor = mTrackColor;
         mConfigBuilder.secondTrackColor = mSecondTrackColor;

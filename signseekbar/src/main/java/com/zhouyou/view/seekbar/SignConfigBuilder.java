@@ -38,6 +38,7 @@ public class SignConfigBuilder {
     int secondTrackSize;
     int cacheTrackSize;
     int thumbRadius;
+    int markRadius;
     int thumbRadiusOnDragging;
     int trackColor;
     int secondTrackColor;
@@ -131,8 +132,12 @@ public class SignConfigBuilder {
         return this;
     }
 
-    public SignConfigBuilder thumbRadius(int dp) {
+    public SignConfigBuilder thumbRadius(float dp) {
         this.thumbRadius = SignUtils.dp2px(dp);
+        return this;
+    }
+    public SignConfigBuilder markRadius(int dp) {
+        this.markRadius = SignUtils.dp2px(dp);
         return this;
     }
 

@@ -10,6 +10,7 @@
         <attr name="ssb_second_track_size" format="dimension|reference"/>
         <attr name="ssb_cache_track_size" format="dimension|reference"/>
         <attr name="ssb_thumb_radius" format="dimension|reference"/> <!--radius of thumb, default: 2dp higher than left-track's height-->
+        <attr name="ssb_mark_radius" format="dimension|reference"/> <!--radius of thumb, default: 2dp higher than left-track's height-->
         <!--radius of thumb when be dragging, default: 2 times of left-track's height-->
         <attr name="ssb_thumb_radius_on_dragging" format="dimension|reference"/>
         <attr name="ssb_track_color" format="color|reference"/> <!--color of right-track, default: R.color.colorPrimary-->
