@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zhouyou.view.seekbar.MarkSeekBar;
 import com.zhouyou.view.seekbar.SignSeekBar;
 
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class DemoFragment3 extends Fragment {
         SignSeekBar signSeekBar2 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_2);
         SignSeekBar signSeekBar3 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_3);
         SignSeekBar signSeekBar4 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_4);
-        SignSeekBar signSeekBar5 = (SignSeekBar) view.findViewById(R.id.demo_3_seek_bar_5);
+        MarkSeekBar signSeekBar5 = (MarkSeekBar) view.findViewById(R.id.demo_3_seek_bar_5);
 
         signSeekBar1.getConfigBuilder()
                 .min(0)
@@ -95,10 +96,7 @@ public class DemoFragment3 extends Fragment {
         arr.add(19000f);
         signSeekBar5.setMax(28254);
         signSeekBar5.setCacheProgress(28000);
-        signSeekBar5.getConfigBuilder()
-                .customSectionArrayFloat(arr)
-                .build();
-
+        signSeekBar5.setCustomArrayFloat(arr);
         return view;
     }
 
