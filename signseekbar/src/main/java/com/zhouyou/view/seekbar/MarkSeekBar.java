@@ -106,7 +106,7 @@ public class MarkSeekBar extends View {
         mCacheTrackSize = a.getDimensionPixelSize(R.styleable.MarkSeekBar_msb_cache_track_size, mTrackSize + SignUtils.dp2px(2));
         mThumbRadius = a.getDimensionPixelSize(R.styleable.MarkSeekBar_msb_thumb_radius, mSecondTrackSize + SignUtils.dp2px(2));
         mMarkRadius = a.getDimensionPixelSize(R.styleable.MarkSeekBar_msb_mark_radius, 0);
-        mThumbRadiusOnDragging = a.getDimensionPixelSize(R.styleable.MarkSeekBar_msb_thumb_radius, mSecondTrackSize * 2);
+        mThumbRadiusOnDragging = a.getDimensionPixelSize(R.styleable.MarkSeekBar_msb_thumb_radius_on_dragging, mSecondTrackSize * 2);
         mTrackColor = a.getColor(R.styleable.MarkSeekBar_msb_track_color, ContextCompat.getColor(context, R.color.colorPrimary));
         mSecondTrackColor = a.getColor(R.styleable.MarkSeekBar_msb_second_track_color, ContextCompat.getColor(context, R.color.colorAccent));
         mCacheTrackColor = a.getColor(R.styleable.MarkSeekBar_msb_cache_track_color, ContextCompat.getColor(context, R.color.colorAccent));
